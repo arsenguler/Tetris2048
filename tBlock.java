@@ -3,8 +3,8 @@ import java.util.Collections;
 
 public class tBlock {
 
-    public double halfLength = 25;
-    private int value;
+    public double halfWidth = 25;
+    public int value;
     private static ArrayList<Integer> list = new ArrayList<Integer>();
     public double x, y;
 
@@ -31,11 +31,19 @@ public class tBlock {
         this.y = y;
     }
 
-    public double getHalfLength() {
-        return halfLength;
+    public double getHalfWidth() {
+        return halfWidth;
     }
 
-    public void setHalfLength(double halfLength) {
-        this.halfLength = halfLength;
+    public void setHalfWidth(double halfWidth) {
+        this.halfWidth = halfWidth;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

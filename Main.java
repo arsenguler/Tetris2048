@@ -1,12 +1,9 @@
 import edu.princeton.cs.introcs.StdDraw;
-
 import java.awt.*;
-
-
 
 public class Main {
     public static void main(String[] args) {
-
+        StdDraw.enableDoubleBuffering();
         // 12 rows, 8 columns.
         // Each block is 50, 50 pixels.
         // Each block is separated by a line with width 5pixels.(Height is 50).
@@ -30,6 +27,18 @@ public class Main {
         StdDraw.text(newCanvasWidth-50, canvasHeight-50,"SCORE");
         StdDraw.text(newCanvasWidth-50, 200,"NEXT");
 
+        double counter = 0;
+        while (true)  {
+
+            // New tetriminoe every 10 seconds
+            if(counter % 10 == 0.0) {
+                Tetriminoe tet = new Tetriminoe(lineWidth, newCanvasWidth, canvasHeight);
+            }
+            
+            // Wait 1 sec to run again
+            StdDraw.show((int) (1* Math.pow(10, 3)));
+            counter++;
+        }
 
 
     /*

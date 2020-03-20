@@ -1,76 +1,97 @@
+import edu.princeton.cs.introcs.StdDraw;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
-
-
+import java.util.List;
 
 public class Tetriminoe {
-    private static ArrayList<Integer> list = new ArrayList<Integer>();
-    private int switchVar;
+    private static ArrayList<Integer> list = new ArrayList<>();
     private tBlock block0;
     private tBlock block1;
     private tBlock block2;
     private tBlock block3;
     private double lineWidth;
-    private double halfWidth;
+    private final double halfWidth = 25;
     private double newCanvasWidth;
     private double canvasHeight;
     private Shape shape;
 
-        public Tetriminoe(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight){
+        public Tetriminoe(double lineWidth, double newCanvasWidth, double canvasHeight){
+            ArrayList<tBlock> blockList = new ArrayList<>();
             this.lineWidth = lineWidth;
-            this.halfWidth = halfWidth;
             this.newCanvasWidth = newCanvasWidth;
             this.canvasHeight = canvasHeight;
             generateTet();
+            blockList.add(block0);
+            blockList.add(block1);
+            blockList.add(block2);
+            blockList.add(block3);
+            drawTet(blockList);
         }
 
-        public Tetriminoe generateTet(){
+        private void generateTet(){
             // 1 = I, 2 = S, 3 = Z, 4 = O, 5 = T, 6 = L, 7 = J
             for(int i = 1; i <= 7; i += 2)
                 list.add(i);
             Collections.shuffle(list);
-            this.switchVar = list.get(0);
+            int switchVar = list.get(0);
             switch(switchVar){
                 case 1:
                     shapeI tetI = new shapeI();
                     this.shape = Shape.I;
                     tetI.generateI(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    return tetI;
+                    break;
                 case 2:
                     shapeS tetS = new shapeS();
                     this.shape = Shape.S;
                     tetS.generateS(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    return tetS;
+                    break;
                 case 3:
                     shapeZ tetZ = new shapeZ();
                     this.shape = Shape.Z;
                     tetZ.generateZ(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    return tetZ;
+                    break;
                 case 4:
                     shapeO tetO = new shapeO();
                     this.shape = Shape.O;
                     tetO.generateO(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    return tetO;
+                    break;
                 case 5:
                     shapeT tetT = new shapeT();
                     this.shape = Shape.T;
                     tetT.generateT(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    return tetT;
+                    break;
                 case 6:
                     shapeL tetL = new shapeL();
                     this.shape = Shape.L;
                     tetL.generateL(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    return tetL;
+                    break;
                 case 7:
                     shapeJ tetJ = new shapeJ();
                     this.shape = Shape.J;
                     tetJ.generateJ(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    return tetJ;
+                    break;
                 default:
                     System.out.println("Something went wrong");
                     break;
             }
-            return null;
+        }
+
+        private void drawTet(ArrayList<tBlock> list){
+            Font font = new Font(Font.DIALOG, Font.BOLD, 10 );
+            StdDraw.setFont(font);
+            for(int i=0; i<4; i++) {
+                if (list.get(i).value == 2)
+                    StdDraw.setPenColor(255, 229, 204);
+                else
+                    StdDraw.setPenColor(255, 204, 153);
+
+                StdDraw.filledSquare(list.get(i).getX(), list.get(i).getY(), halfWidth);
+                StdDraw.setPenColor(StdDraw.BLACK);
+                StdDraw.text(list.get(i).getX(), list.get(i).getY(), String.valueOf(list.get(i).value));
+            }
+
         }
 
     public Tetriminoe() {

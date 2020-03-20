@@ -46,7 +46,7 @@ public class BouncingBall {
             StdDraw.show();
 
             // pause for 20 ms
-            StdDraw.pause(20);
+            StdDraw.pause((int) (1* Math.pow(10, 3)));
 
         }
     }
