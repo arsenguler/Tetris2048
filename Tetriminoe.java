@@ -14,6 +14,7 @@ public class Tetriminoe {
     private double halfWidth;
     private double newCanvasWidth;
     private double canvasHeight;
+    private Shape shape;
 
         public Tetriminoe(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight){
             this.lineWidth = lineWidth;
@@ -23,7 +24,7 @@ public class Tetriminoe {
             generateTet();
         }
 
-        public void generateTet(){
+        public Tetriminoe generateTet(){
             // 1 = I, 2 = S, 3 = Z, 4 = O, 5 = T, 6 = L, 7 = J
             for(int i = 1; i <= 7; i += 2)
                 list.add(i);
@@ -32,46 +33,57 @@ public class Tetriminoe {
             switch(switchVar){
                 case 1:
                     shapeI tetI = new shapeI();
+                    this.shape = Shape.I;
                     tetI.generateI(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    break;
+                    return tetI;
                 case 2:
                     shapeS tetS = new shapeS();
+                    this.shape = Shape.S;
                     tetS.generateS(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    break;
+                    return tetS;
                 case 3:
                     shapeZ tetZ = new shapeZ();
+                    this.shape = Shape.Z;
                     tetZ.generateZ(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    break;
+                    return tetZ;
                 case 4:
                     shapeO tetO = new shapeO();
+                    this.shape = Shape.O;
                     tetO.generateO(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    break;
+                    return tetO;
                 case 5:
                     shapeT tetT = new shapeT();
+                    this.shape = Shape.T;
                     tetT.generateT(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    break;
+                    return tetT;
                 case 6:
                     shapeL tetL = new shapeL();
+                    this.shape = Shape.L;
                     tetL.generateL(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    break;
+                    return tetL;
                 case 7:
                     shapeJ tetJ = new shapeJ();
+                    this.shape = Shape.J;
                     tetJ.generateJ(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
-                    break;
+                    return tetJ;
                 default:
                     System.out.println("Something went wrong");
                     break;
             }
+            return null;
         }
 
-    public class shapeS{
+    public Tetriminoe() {
+    }
+
+    public class shapeS extends Tetriminoe{
         private shapeS(){
              block0 = new tBlock();
              block1 = new tBlock();
              block2 = new tBlock();
              block3 = new tBlock();
         }
-        public void generateS(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight){
+        public void generateS (double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight){
             block0.setX(2.5*lineWidth + 5*halfWidth);
             block0.setY(canvasHeight-(3*halfWidth + 1.5*lineWidth));
             block1.setX(block0.getX() + (lineWidth + halfWidth));
@@ -83,7 +95,7 @@ public class Tetriminoe {
         }
     }
 
-    public class shapeI{
+    public class shapeI extends Tetriminoe{
         private shapeI(){
             block0 = new tBlock();
             block1 = new tBlock();
@@ -102,7 +114,7 @@ public class Tetriminoe {
         }
     }
 
-    public class shapeZ{
+    public class shapeZ extends Tetriminoe{
         private shapeZ(){
             block0 = new tBlock();
             block1 = new tBlock();
@@ -121,7 +133,7 @@ public class Tetriminoe {
         }
     }
 
-    public class shapeO{
+    public class shapeO extends Tetriminoe{
         private shapeO(){
             block0 = new tBlock();
             block1 = new tBlock();
@@ -140,7 +152,7 @@ public class Tetriminoe {
         }
     }
 
-    public class shapeT{
+    public class shapeT extends Tetriminoe{
         private shapeT(){
             block0 = new tBlock();
             block1 = new tBlock();
@@ -159,7 +171,7 @@ public class Tetriminoe {
         }
     }
 
-    public class shapeL{
+    public class shapeL extends Tetriminoe{
         private shapeL(){
             block0 = new tBlock();
             block1 = new tBlock();
@@ -178,7 +190,7 @@ public class Tetriminoe {
         }
     }
 
-    public class shapeJ{
+    public class shapeJ extends Tetriminoe{
         private shapeJ(){
             block0 = new tBlock();
             block1 = new tBlock();
@@ -197,4 +209,7 @@ public class Tetriminoe {
         }
     }
 
+}
+class Shape {
+    public static Shape I, S, Z, O, T, L, J;
 }
