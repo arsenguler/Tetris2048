@@ -196,5 +196,5 @@ public class Tetriminoe {
             block3.setY(block0.getY() +  + (lineWidth + 2*halfWidth));
         }
     }
-    
+
 }

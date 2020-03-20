@@ -16,6 +16,7 @@ public class Main {
         double canvasWidth = blockWidth*cols + (cols)*lineWidth, canvasHeight = blockHeight*rows + (rows)*lineWidth;
         // Side area showing score and next tetriminoe with width=100 and height=previousCanvasHeight
         double newCanvasWidth = canvasWidth+100;
+        // Initializing canvas w/ param. newCanvasWidth and canvasHeight
         StdDraw.setCanvasSize((int)newCanvasWidth, (int)canvasHeight);
         StdDraw.setXscale(0,newCanvasWidth);   StdDraw.setYscale(0, canvasHeight);
         StdDraw.setPenRadius(lineWidth/canvasHeight);
