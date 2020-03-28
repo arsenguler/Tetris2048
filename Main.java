@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        StdDraw.enableDoubleBuffering();
+
         // 12 rows, 8 columns.
         // Each block is 50, 50 pixels.
         // Each block is separated by a line with width 5pixels.(Height is 50).
@@ -18,48 +18,42 @@ public class Main {
         StdDraw.setXscale(0,newCanvasWidth);   StdDraw.setYscale(0, canvasHeight);
         StdDraw.setPenRadius(lineWidth/canvasHeight);
         StdDraw.setPenColor(StdDraw.BLACK);
-        for(double i = 0; i<=rows; i++)
-            StdDraw.line(0.0, i*(blockHeight + lineWidth), canvasWidth, i*(blockHeight + lineWidth));
-        for(double i = 0; i<=cols; i++)
-            StdDraw.line(i*(blockWidth + lineWidth), 0.0, i*(blockWidth + lineWidth), canvasHeight);
-        Font font = new Font(Font.DIALOG, Font.BOLD, 15 );
-        StdDraw.setFont(font);
-        StdDraw.text(newCanvasWidth-50, canvasHeight-50,"SCORE");
-        StdDraw.text(newCanvasWidth-50, 200,"NEXT");
+        StdDraw.enableDoubleBuffering();
 
-        double counter = 0;
+        Shape shape = null;
+        double counter = 0.0;
         while (true)  {
 
-            // New tetriminoe every 10 seconds
+            StdDraw.clear();
+
+            for(double i = 0; i<=rows; i++)
+                StdDraw.line(0.0, i*(blockHeight + lineWidth), canvasWidth, i*(blockHeight + lineWidth));
+            for(double i = 0; i<=cols; i++)
+                StdDraw.line(i*(blockWidth + lineWidth), 0.0, i*(blockWidth + lineWidth), canvasHeight);
+            Font font = new Font(Font.DIALOG, Font.BOLD, 15 );
+            StdDraw.setFont(font);
+            StdDraw.text(newCanvasWidth-50, canvasHeight-50,"SCORE");
+            StdDraw.text(newCanvasWidth-50, 200,"NEXT");
+
+            // New tetriminoe every 10 cycles
             if(counter % 10 == 0.0) {
-                Tetriminoe tet = new Tetriminoe(lineWidth, newCanvasWidth, canvasHeight);
+                if(null == shape) {
+                    Tetriminoe tet = new Tetriminoe(null, lineWidth, blockWidth / 2.0, newCanvasWidth, canvasHeight);
+                    shape = new Shape();
+                    tet.drawNext(shape, newCanvasWidth, canvasHeight, (blockWidth/2.0)*0.3, lineWidth*0.3);
+                }
+                else{
+                    Tetriminoe tet = new Tetriminoe(shape, lineWidth, blockWidth / 2.0, newCanvasWidth, canvasHeight);
+                    shape = new Shape();
+                    tet.drawNext(shape, newCanvasWidth, canvasHeight, (blockWidth/2.0)*0.3, lineWidth*0.3);
+                }
             }
-            
-            // Wait 1 sec to run again
-            StdDraw.show((int) (1* Math.pow(10, 3)));
+
+            StdDraw.show();
+            StdDraw.pause((int) (0.5* Math.pow(10, 3)));
+            // Wait 0.5 sec to run again
             counter++;
         }
-
-
-    /*
-        // main animation loop
-        while (true)  {
-
-            // clear the background
-            StdDraw.clear(StdDraw.WHITE);
-
-            // draw ball on the screen
-            StdDraw.setPenColor(StdDraw.BLACK);
-            StdDraw.filledCircle(rx, ry, radius);
-
-            // copy offscreen buffer to onscreen
-            StdDraw.show();
-
-            // pause for 20 ms
-            StdDraw.pause(20);
-
-        }
-
-         */
     }
 }
+
