@@ -36,14 +36,15 @@ public class Tetriminoe {
     */
 
     public Tetriminoe(Shape type, double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
-        this.shape = type;
         this.halfWidth = halfWidth;
         ArrayList<tBlock> blockList = new ArrayList<>();
         this.lineWidth = lineWidth;
         this.newCanvasWidth = newCanvasWidth;
         this.canvasHeight = canvasHeight;
-        if(null != type)
+        if(null != type) {
+            this.shape = new Shape(type.toString());
             generateTet(type);
+        }
         else {
             generateTet();
         }
@@ -396,43 +397,43 @@ public class Tetriminoe {
                 shapeI tetI = new shapeI();
                 this.shape = Shape.I;
                 tetI.generateI_next(lineW, halfW, width, height);
-                drawTet(tetI.blockList, halfWidth/2.0);
+                drawTet(tetI.blockList, halfWidth*0.3);
                 break;
             case "S":
                 shapeS tetS = new shapeS();
                 this.shape = Shape.S;
                 tetS.generateS_next(lineW, halfW, width, height);
-                drawTet(tetS.blockList, halfWidth/2.0);
+                drawTet(tetS.blockList, halfWidth*0.3);
                 break;
             case "Z":
                 shapeZ tetZ = new shapeZ();
                 this.shape = Shape.Z;
                 tetZ.generateZ_next(lineW, halfW, width, height);
-                drawTet(tetZ.blockList, halfWidth/2.0);
+                drawTet(tetZ.blockList, halfWidth*0.3);
                 break;
             case "O":
                 shapeO tetO = new shapeO();
                 this.shape = Shape.O;
                 tetO.generateO_next(lineW, halfW, width, height);
-                drawTet(tetO.blockList, halfWidth/2.0);
+                drawTet(tetO.blockList, halfWidth*0.3);
                 break;
             case "T":
                 shapeT tetT = new shapeT();
                 this.shape = Shape.T;
                 tetT.generateT_next(lineW, halfW, width, height);
-                drawTet(tetT.blockList, halfWidth/2.0);
+                drawTet(tetT.blockList, halfWidth*0.3);
                 break;
             case "L":
                 shapeL tetL = new shapeL();
                 this.shape = Shape.L;
                 tetL.generateL_next(lineW, halfW, width, height);
-                drawTet(tetL.blockList, halfWidth/2.0);
+                drawTet(tetL.blockList, halfWidth*0.3);
                 break;
             case "J":
                 shapeJ tetJ = new shapeJ();
                 this.shape = Shape.J;
                 tetJ.generateJ_next(lineW, halfW, width, height);
-                drawTet(tetJ.blockList, halfWidth/2.0);
+                drawTet(tetJ.blockList, halfWidth*0.3);
                 break;
             default:
                 System.out.println("Something went wrong");
@@ -469,8 +470,8 @@ class Shape {
             // 1 = I, 2 = S, 3 = Z, 4 = O, 5 = T, 6 = L, 7 = J
             for (int i = 1; i <= 7; i += 2)
                 list.add(i);
-            Collections.shuffle(list);
         }
+        Collections.shuffle(list);
         int switchVar = list.get(0);
         switch (switchVar) {
             case 1:
