@@ -5,12 +5,14 @@ public class tBlock {
 
     public double halfWidth = 25;
     public int value;
-    private static ArrayList<Integer> list = new ArrayList<Integer>();
+    private static ArrayList<Integer> list = new ArrayList<>();
     public double x, y;
 
     public tBlock() {
-        for(int i = 2; i <= 4; i += 2)
-            list.add(i);
+        if(list.isEmpty()) {
+            list.add(2);
+            list.add(4);
+        }
         Collections.shuffle(list);
         this.value = list.get(0);
     }

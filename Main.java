@@ -1,5 +1,6 @@
 import edu.princeton.cs.introcs.StdDraw;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,9 +19,12 @@ public class Main {
         StdDraw.setXscale(0,newCanvasWidth);   StdDraw.setYscale(0, canvasHeight);
         StdDraw.setPenRadius(lineWidth/canvasHeight);
         StdDraw.setPenColor(StdDraw.BLACK);
+        // Every block that needs to be drawn
+        ArrayList<tBlock> drawList = new ArrayList<>();
         StdDraw.enableDoubleBuffering();
 
         Shape shape = null;
+        ArrayList<tBlock> blockList = new ArrayList<>();
         double counter = 0.0;
         while (true)  {
 
@@ -36,21 +40,21 @@ public class Main {
             StdDraw.text(newCanvasWidth-50, 200,"NEXT");
 
             // New tetriminoe every 10 cycles
-            if(counter % 10 == 0.0) {
+            if(counter % 2 == 0.0) {
                 if(null == shape) {
-                    Tetriminoe tet = new Tetriminoe(null, lineWidth, blockWidth / 2.0, newCanvasWidth, canvasHeight);
+                    Tetriminoe tet = new Tetriminoe(null, lineWidth, blockWidth / 2.0, newCanvasWidth, canvasHeight, null);
                     shape = new Shape();
-                    tet.drawNext(shape, newCanvasWidth, canvasHeight, (blockWidth/2.0)*0.3, lineWidth*0.3);
+                    blockList = tet.drawNext(shape, newCanvasWidth, canvasHeight, (blockWidth/2.0)*0.3, lineWidth*0.3);
                 }
                 else{
-                    Tetriminoe tet = new Tetriminoe(shape, lineWidth, blockWidth / 2.0, newCanvasWidth, canvasHeight);
+                    Tetriminoe tet = new Tetriminoe(shape, lineWidth, blockWidth / 2.0, newCanvasWidth, canvasHeight, blockList);
                     shape = new Shape();
-                    tet.drawNext(shape, newCanvasWidth, canvasHeight, (blockWidth/2.0)*0.3, lineWidth*0.3);
+                    blockList = tet.drawNext(shape, newCanvasWidth, canvasHeight, (blockWidth/2.0)*0.3, lineWidth*0.3);
                 }
             }
 
             StdDraw.show();
-            StdDraw.pause((int) (0.5* Math.pow(10, 3)));
+            StdDraw.pause((int) (2* Math.pow(10, 3)));
             // Wait 0.5 sec to run again
             counter++;
         }

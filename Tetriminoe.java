@@ -7,7 +7,15 @@ import java.util.List;
 
 
 public class Tetriminoe {
+    public static Shape I = new Shape("I");
+    public static Shape S = new Shape("S");
+    public static Shape Z = new Shape("Z");
+    public static Shape L = new Shape("L");
+    public static Shape J = new Shape("J");
+    public static Shape O = new Shape("O");
+    public static Shape T = new Shape("T");
     private static ArrayList<Integer> list = new ArrayList<>();
+    private ArrayList<tBlock> blockList = new ArrayList<>();
     private tBlock block0;
     private tBlock block1;
     private tBlock block2;
@@ -17,7 +25,6 @@ public class Tetriminoe {
     private double newCanvasWidth;
     private double canvasHeight;
     private Shape shape;
-    private Tetriminoe next;
 
     /*
     public Tetriminoe(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
@@ -35,24 +42,33 @@ public class Tetriminoe {
     }
     */
 
-    public Tetriminoe(Shape type, double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+    public Tetriminoe(Shape type, double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight, ArrayList<tBlock> blocks) {
+        if (list.isEmpty()) {
+            for (int i = 1; i <= 7; i ++)
+                list.add(i);
+        }
         this.halfWidth = halfWidth;
-        ArrayList<tBlock> blockList = new ArrayList<>();
         this.lineWidth = lineWidth;
         this.newCanvasWidth = newCanvasWidth;
         this.canvasHeight = canvasHeight;
         if(null != type) {
             this.shape = new Shape(type.toString());
-            generateTet(type);
+            generateTet(shape);
         }
         else {
             generateTet();
         }
-        blockList.add(block0);
-        blockList.add(block1);
-        blockList.add(block2);
-        blockList.add(block3);
-        drawTet(blockList, halfWidth);
+        if(null != blocks){
+            block0.setValue(blocks.get(0).getValue());
+            block1.setValue(blocks.get(1).getValue());
+            block2.setValue(blocks.get(2).getValue());
+            block3.setValue(blocks.get(3).getValue());
+        }
+        this.blockList.add(block0);
+        this.blockList.add(block1);
+        this.blockList.add(block2);
+        this.blockList.add(block3);
+        drawTet(this.blockList, halfWidth);
     }
 
     private void generateTet(Shape type) {
@@ -60,37 +76,37 @@ public class Tetriminoe {
         switch (switchVar) {
             case "I":
                 shapeI tetI = new shapeI();
-                this.shape = Shape.I;
+                this.shape = I;
                 tetI.generateI(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
                 break;
             case "S":
                 shapeS tetS = new shapeS();
-                this.shape = Shape.S;
+                this.shape = S;
                 tetS.generateS(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
                 break;
             case "Z":
                 shapeZ tetZ = new shapeZ();
-                this.shape = Shape.Z;
+                this.shape = Z;
                 tetZ.generateZ(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
                 break;
             case "O":
                 shapeO tetO = new shapeO();
-                this.shape = Shape.O;
+                this.shape = O;
                 tetO.generateO(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
                 break;
             case "T":
                 shapeT tetT = new shapeT();
-                this.shape = Shape.T;
+                this.shape = T;
                 tetT.generateT(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
                 break;
             case "L":
                 shapeL tetL = new shapeL();
-                this.shape = Shape.L;
+                this.shape = L;
                 tetL.generateL(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
                 break;
             case "J":
                 shapeJ tetJ = new shapeJ();
-                this.shape = Shape.J;
+                this.shape = J;
                 tetJ.generateJ(lineWidth, halfWidth, newCanvasWidth, canvasHeight);
                 break;
             default:
@@ -101,8 +117,6 @@ public class Tetriminoe {
 
     private void generateTet () {
             // 1 = I, 2 = S, 3 = Z, 4 = O, 5 = T, 6 = L, 7 = J
-            for (int i = 1; i <= 7; i += 2)
-                list.add(i);
             Collections.shuffle(list);
             int switchVar = list.get(0);
             switch (switchVar) {
@@ -150,15 +164,15 @@ public class Tetriminoe {
     private void drawTet (ArrayList < tBlock > list, double halfWidth) {
             Font font = new Font(Font.DIALOG, Font.BOLD, 10);
             StdDraw.setFont(font);
-            for (int i = 0; i < 4; i++) {
-                if (list.get(i).value == 2)
+            for (tBlock t : list) {
+                if (t.value == 2)
                     StdDraw.setPenColor(255, 229, 204);
                 else
                     StdDraw.setPenColor(255, 204, 153);
 
-                StdDraw.filledSquare(list.get(i).getX(), list.get(i).getY(), halfWidth);
+                StdDraw.filledSquare(t.getX(), t.getY(), halfWidth);
                 StdDraw.setPenColor(StdDraw.BLACK);
-                StdDraw.text(list.get(i).getX(), list.get(i).getY(),String.valueOf(list.get(i).getValue()));
+                StdDraw.text(t.getX(), t.getY(),String.valueOf(t.getValue()));
             }
 
         }
@@ -178,22 +192,22 @@ public class Tetriminoe {
             public void generateS(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
                 block0.setX(2.5 * lineWidth + 5 * halfWidth);
                 block0.setY(canvasHeight - (3 * halfWidth + 1.5 * lineWidth));
-                block1.setX(block0.getX() + (lineWidth + halfWidth));
+                block1.setX(block0.getX() + (lineWidth + 2.0*halfWidth));
                 block1.setY(block0.getY());
                 block2.setX(block1.getX());
-                block2.setY(block1.getY() + (lineWidth + halfWidth));
-                block3.setX(block2.getX() + (lineWidth + halfWidth));
+                block2.setY(block1.getY() + (lineWidth + 2.0*halfWidth));
+                block3.setX(block2.getX() + (lineWidth + 2.0*halfWidth));
                 block3.setY(block2.getY());
             }
 
             public void generateS_next(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
                 block0.setX(newCanvasWidth-100+halfWidth*2.5);
                 block0.setY(150.0);
-                block1.setX(block0.getX() + (lineWidth + halfWidth));
+                block1.setX(block0.getX() + (lineWidth + 2.0*halfWidth));
                 block1.setY(block0.getY());
                 block2.setX(block1.getX());
-                block2.setY(block1.getY() + (lineWidth + halfWidth));
-                block3.setX(block2.getX() + (lineWidth + halfWidth));
+                block2.setY(block1.getY() + (lineWidth + 2.0*halfWidth));
+                block3.setX(block2.getX() + (lineWidth + 2.0*halfWidth));
                 block3.setY(block2.getY());
             }
         }
@@ -272,13 +286,13 @@ public class Tetriminoe {
         }
 
         public void generateO(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
-            block0.setX(2.5 * lineWidth + 5 * halfWidth);
+            block0.setX(3.5 * lineWidth + 7 * halfWidth);
             block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
             block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
             block1.setY(block0.getY());
-            block2.setX(block0.getX());
-            block2.setY(block0.getY() - (-lineWidth + 2 * halfWidth));
-            block3.setX(block1.getX());
+            block2.setX(block1.getX());
+            block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
+            block3.setX(block2.getX() - (lineWidth + 2.0 * halfWidth));
             block3.setY(block2.getY());
         }
 
@@ -287,9 +301,9 @@ public class Tetriminoe {
             block0.setY(150.0);
             block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
             block1.setY(block0.getY());
-            block2.setX(block0.getX());
-            block2.setY(block0.getY() - (-lineWidth + 2 * halfWidth));
-            block3.setX(block1.getX());
+            block2.setX(block1.getX());
+            block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
+            block3.setX(block2.getX() - (lineWidth + 2.0 * halfWidth));
             block3.setY(block2.getY());
         }
     }
@@ -311,7 +325,7 @@ public class Tetriminoe {
                 block2.setX(block1.getX());
                 block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
                 block3.setX(block1.getX() + (lineWidth + 2 * halfWidth));
-                block3.setY(block0.getY());
+                block3.setY(block1.getY());
             }
 
             public void generateT_next(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
@@ -322,7 +336,7 @@ public class Tetriminoe {
                 block2.setX(block1.getX());
                 block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
                 block3.setX(block1.getX() + (lineWidth + 2 * halfWidth));
-                block3.setY(block0.getY());
+                block3.setY(block1.getY());
             }
         }
 
@@ -337,13 +351,13 @@ public class Tetriminoe {
 
             public void generateL(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
                 block0.setX(2.5 * lineWidth + 5 * halfWidth);
-                block0.setY(canvasHeight - (3 * halfWidth + 0.5 * lineWidth));
+                block0.setY(canvasHeight - (3 * halfWidth + 1.5 * lineWidth));
                 block1.setX(block0.getX());
                 block1.setY(block0.getY() + (lineWidth + 2 * halfWidth));
-                block2.setX(block1.getX());
+                block2.setX(block1.getX() + (lineWidth + 2 * halfWidth));
                 block2.setY(block1.getY());
                 block3.setX(block2.getX() + (lineWidth + 2 * halfWidth));
-                block3.setY(block0.getY());
+                block3.setY(block2.getY());
             }
 
             public void generateL_next(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
@@ -351,10 +365,10 @@ public class Tetriminoe {
                 block0.setY(150.0);
                 block1.setX(block0.getX());
                 block1.setY(block0.getY() + (lineWidth + 2 * halfWidth));
-                block2.setX(block1.getX());
+                block2.setX(block1.getX() + (lineWidth + 2 * halfWidth));
                 block2.setY(block1.getY());
                 block3.setX(block2.getX() + (lineWidth + 2 * halfWidth));
-                block3.setY(block0.getY());
+                block3.setY(block2.getY());
             }
         }
 
@@ -373,9 +387,9 @@ public class Tetriminoe {
                 block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
                 block1.setY(block0.getY());
                 block2.setX(block1.getX() + (lineWidth + 2 * halfWidth));
-                block2.setY(block0.getY());
+                block2.setY(block1.getY());
                 block3.setX(block2.getX());
-                block3.setY(block0.getY() + +(lineWidth + 2 * halfWidth));
+                block3.setY(block2.getY() - (lineWidth + 2 * halfWidth));
             }
 
             public void generateJ_next(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
@@ -384,122 +398,122 @@ public class Tetriminoe {
                 block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
                 block1.setY(block0.getY());
                 block2.setX(block1.getX() + (lineWidth + 2 * halfWidth));
-                block2.setY(block0.getY());
+                block2.setY(block1.getY());
                 block3.setX(block2.getX());
-                block3.setY(block0.getY() + +(lineWidth + 2 * halfWidth));
+                block3.setY(block2.getY() - (lineWidth + 2 * halfWidth));
             }
         }
 
-    public void drawNext(Shape type, double width, double height, double halfW, double lineW){
+    public ArrayList<tBlock> drawNext(Shape type, double width, double height, double halfW, double lineW){
         String switchVar = type.toString();
         switch (switchVar) {
             case "I":
                 shapeI tetI = new shapeI();
-                this.shape = Shape.I;
+                this.shape = I;
                 tetI.generateI_next(lineW, halfW, width, height);
                 drawTet(tetI.blockList, halfWidth*0.3);
-                break;
+                return tetI.blockList;
             case "S":
                 shapeS tetS = new shapeS();
-                this.shape = Shape.S;
+                this.shape = S;
                 tetS.generateS_next(lineW, halfW, width, height);
                 drawTet(tetS.blockList, halfWidth*0.3);
-                break;
+                return tetS.blockList;
             case "Z":
                 shapeZ tetZ = new shapeZ();
-                this.shape = Shape.Z;
+                this.shape = Z;
                 tetZ.generateZ_next(lineW, halfW, width, height);
                 drawTet(tetZ.blockList, halfWidth*0.3);
-                break;
+                return tetZ.blockList;
             case "O":
                 shapeO tetO = new shapeO();
-                this.shape = Shape.O;
+                this.shape = O;
                 tetO.generateO_next(lineW, halfW, width, height);
                 drawTet(tetO.blockList, halfWidth*0.3);
-                break;
+                return tetO.blockList;
             case "T":
                 shapeT tetT = new shapeT();
-                this.shape = Shape.T;
+                this.shape = T;
                 tetT.generateT_next(lineW, halfW, width, height);
                 drawTet(tetT.blockList, halfWidth*0.3);
-                break;
+                return tetT.blockList;
             case "L":
                 shapeL tetL = new shapeL();
-                this.shape = Shape.L;
+                this.shape = L;
                 tetL.generateL_next(lineW, halfW, width, height);
                 drawTet(tetL.blockList, halfWidth*0.3);
-                break;
+                return tetL.blockList;
             case "J":
                 shapeJ tetJ = new shapeJ();
-                this.shape = Shape.J;
+                this.shape = J;
                 tetJ.generateJ_next(lineW, halfW, width, height);
                 drawTet(tetJ.blockList, halfWidth*0.3);
-                break;
+                return tetJ.blockList;
             default:
                 System.out.println("Something went wrong");
-                break;
+                return null;
         }
 
         }
     }
 
 class Shape {
-    public static Shape I, S, Z, O, T, L, J;
+
     private static ArrayList<Integer> list = new ArrayList<>();
     public Shape shape;
     private String toString;
     public Shape(String shape){
         if(shape == "I")
-            this.shape = Shape.I;
+            this.shape = Tetriminoe.I;
         if(shape == "S")
-            this.shape = Shape.S;
+            this.shape = Tetriminoe.S;
         if(shape == "Z")
-            this.shape = Shape.Z;
+            this.shape = Tetriminoe.Z;
         if(shape == "O")
-            this.shape = Shape.O;
+            this.shape = Tetriminoe.O;
         if(shape == "T")
-            this.shape = Shape.T;
+            this.shape = Tetriminoe.T;
         if(shape == "L")
-            this.shape = Shape.L;
+            this.shape = Tetriminoe.L;
         if(shape == "J")
-            this.shape = Shape.J;
+            this.shape = Tetriminoe.J;
         toString = shape;
     }
     public Shape() {
         if (list.isEmpty()) {
             // 1 = I, 2 = S, 3 = Z, 4 = O, 5 = T, 6 = L, 7 = J
-            for (int i = 1; i <= 7; i += 2)
+            for (int i = 1; i <= 7; i ++)
                 list.add(i);
         }
         Collections.shuffle(list);
         int switchVar = list.get(0);
         switch (switchVar) {
             case 1:
-                shape = Shape.I;
+                shape = Tetriminoe.I;
                 toString = "I";
                 break;
             case 2:
-                shape = Shape.S;
+                shape = Tetriminoe.S;
                 toString = "S";
                 break;
             case 3:
-                shape = Shape.Z;
+                shape = Tetriminoe.Z;
                 toString = "Z";
                 break;
             case 4:
-                shape = Shape.O;
+                shape = Tetriminoe.O;
                 toString = "O";
                 break;
             case 5:
-                shape = Shape.T;
+                shape = Tetriminoe.T;
                 toString = "T";
                 break;
             case 6:
-                shape = Shape.L;
+                shape = Tetriminoe.L;
                 toString = "L";
                 break;
             case 7:
-                shape = Shape.J;
+                shape = Tetriminoe.J;
                 toString = "J";
                 break;
         }
