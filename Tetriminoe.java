@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.lang.Object.*;
 
 
 public class Tetriminoe {
@@ -15,7 +16,7 @@ public class Tetriminoe {
     public static Shape O = new Shape("O");
     public static Shape T = new Shape("T");
     private static ArrayList<Integer> list = new ArrayList<>();
-    private ArrayList<tBlock> blockList = new ArrayList<>();
+    public ArrayList<tBlock> blockList = new ArrayList<>();
     private tBlock block0;
     private tBlock block1;
     private tBlock block2;
@@ -161,7 +162,7 @@ public class Tetriminoe {
             }
         }
 
-    private void drawTet (ArrayList < tBlock > list, double halfWidth) {
+    public void drawTet (ArrayList < tBlock > list, double halfWidth) {
             Font font = new Font(Font.DIALOG, Font.BOLD, 10);
             StdDraw.setFont(font);
             for (tBlock t : list) {
@@ -179,6 +180,108 @@ public class Tetriminoe {
 
     public Tetriminoe() {
         }
+
+    public void rotatetTet(){
+
+    }
+
+    public void moveTet(Tetriminoe tet, double lineWidth, double halfWidth, ArrayList<tBlock> drawList){
+        // check if the tetriminoe already touches any other tet. below it
+        int flag = 1;
+        ArrayList<tBlock> workWith = findBottom(tet);
+        for(tBlock t : workWith) {
+            for (int i = 0; i< drawList.size()-4; i++) {
+                if (t.getX() == drawList.get(i).getX() && t.getY() + lineWidth + 2.0 * halfWidth == drawList.get(i).getY()){
+                    flag = 0;
+                    break;
+                }
+                if (flag == 0)
+                    break;
+            }
+        }
+        if (flag == 1) {
+            for (tBlock t : tet.blockList) {
+                // move down 1 block
+                t.setY(t.getY() - (lineWidth + 2.0 * halfWidth));
+
+                // check if left is pressed
+                if (StdDraw.isKeyPressed(37)) {
+                    // check if it exceeds borders
+                    if (t.getX() - (lineWidth + 2.0 * halfWidth) >= (0.5 * lineWidth + halfWidth)) {
+                        // move left 1 block
+                        t.setX(t.getX() - (lineWidth + 2.0 * halfWidth));
+                    }
+                }
+                // check if right is pressed
+                if (StdDraw.isKeyPressed(39)) {
+                    // check if it exceeds borders
+                    if (t.getX() + (lineWidth + 2.0 * halfWidth) <= newCanvasWidth - (0.5 * lineWidth + halfWidth)) {
+                        // move right 1 block
+                        t.setX(t.getX() + (lineWidth + 2.0 * halfWidth));
+                    }
+                }
+            }
+        }
+        // Update tetriminoe's place in drawList
+        drawList.get(drawList.size()-4).setX(blockList.get(0).getX());
+        drawList.get(drawList.size()-4).setY(blockList.get(0).getY());
+        drawList.get(drawList.size()-3).setX(blockList.get(1).getX());
+        drawList.get(drawList.size()-3).setY(blockList.get(1).getY());
+        drawList.get(drawList.size()-2).setX(blockList.get(2).getX());
+        drawList.get(drawList.size()-2).setY(blockList.get(2).getY());
+        drawList.get(drawList.size()-1).setX(blockList.get(3).getX());
+        drawList.get(drawList.size()-1).setY(blockList.get(3).getY());
+    }
+
+    private ArrayList<tBlock> findBottom(Tetriminoe tet){
+        ArrayList<tBlock> bottom = new ArrayList<>();
+        int flag = 1;
+        for(int i=1; i<tet.blockList.size(); i++){
+            if(blockList.get(0).getY()-(halfWidth+2.0*lineWidth)==blockList.get(i).getY()) {
+                flag = 0;
+                break;
+            }
+        }
+        if (flag == 1)
+                bottom.add(blockList.get(0));
+
+        int counter = 0;
+        for(int i=2; i<tet.blockList.size(); i++){
+            if (i+1>=blockList.size())
+                i = i-blockList.size()+1;
+            if(blockList.get(1).getY()-(halfWidth+2.0*lineWidth)==blockList.get(i).getY()){
+                flag = 0;
+                break;
+            }
+            counter++;
+            if (counter>=3)
+                break;
+        }
+        if (flag == 1)
+            bottom.add(blockList.get(1));
+        counter = 0;
+        for(int i=3; i<tet.blockList.size(); i++) {
+            if (i + 1 >= blockList.size())
+                i = i - blockList.size() + 1;
+            if (blockList.get(2).getY() - (halfWidth + 2.0 * lineWidth) == blockList.get(i).getY()) {
+                flag = 0;
+                break;
+            }
+            counter ++;
+            if (counter>=3)
+                break;
+        }
+            if (flag == 1)
+                bottom.add(blockList.get(2));
+
+        for(int i=0; i<3; i++){
+            if(blockList.get(3).getY()-(halfWidth+2.0*lineWidth)==blockList.get(i).getY())
+                break;
+            else
+                bottom.add(blockList.get(3));
+        }
+        return bottom;
+    }
 
     public class shapeS extends Tetriminoe {
             public ArrayList<tBlock> blockList = new ArrayList<>();
