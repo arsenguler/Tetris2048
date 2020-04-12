@@ -19,7 +19,6 @@ public class Main {
         StdDraw.setPenRadius(lineWidth/canvasHeight);
         StdDraw.setPenColor(StdDraw.BLACK);
         int score = 0;
-
         // Every block that needs to be drawn
         ArrayList<tBlock> drawList = new ArrayList<>();
         StdDraw.enableDoubleBuffering();
@@ -71,12 +70,13 @@ public class Main {
                 count++;
             }
                 StdDraw.clear();
+                score = deleteRows(drawList, score, lineWidth, blockWidth * 0.5, canvasHeight, newCanvasWidth);
                 drawGameEnvironment(newCanvasWidth, canvasHeight, lineWidth, rows, cols, blockHeight, canvasWidth, blockWidth, score);
                 tet.drawTet(drawList, blockWidth/2.0);
                 tet.drawTet(blockList, (blockWidth/2.0)*0.3);
                 StdDraw.show();
                 // Wait a certain amount of time to run again
-                StdDraw.pause((int) (0.5 * Math.pow(10, 3)));
+                StdDraw.pause((int) (0.2 * Math.pow(10, 3)));
                 counter++;
         }
     }
@@ -92,5 +92,48 @@ public class Main {
         StdDraw.text(newCanvasWidth-50, 200,"NEXT");
     }
 
+    public static int deleteRows(ArrayList<tBlock> drawList, int score, double lineWidth, double halfWidth, double canvasHeight, double newCanvasWidth){
+        boolean flag = false;
+        ArrayList<Double> rows = new ArrayList<>();
+        // check occurrence of full rows
+        for (double y = (0.5 * lineWidth + halfWidth); y < canvasHeight; y += halfWidth * 2.0 + lineWidth){
+            int counter = 0;
+            for (double x = (0.5 * lineWidth + halfWidth); x <= newCanvasWidth - (100 + halfWidth + lineWidth); x += lineWidth + halfWidth * 2.0){
+                for (tBlock t : drawList){
+                    if ((t.getX() == x && t.getY() == y)){
+                        counter ++;
+                    }
+                }
+            }
+            if (counter == 7) {
+                rows.add(y);
+                flag = true;
+            }
+        }
+        if (flag) {
+            // delete full rows from the drawlist
+            ArrayList<tBlock> willRemove = new ArrayList<>();
+            for (tBlock t : drawList) {
+                for (double y : rows) {
+                    if (t.getY() == y) {
+                        // update score
+                        score += t.getValue();
+                        willRemove.add(t);
+                    }
+                }
+            }
+            drawList.removeAll(willRemove);
+            // move rows which were above deleted rows 1 block down
+            for (tBlock t : drawList) {
+                for (double y : rows) {
+                    if (t.getY() > y) {
+                        t.setY(t.getY() - (halfWidth * 2.0 + lineWidth));
+                    }
+                }
+            }
+        }
+        else return score;
+        return score;
+    }
 }
 

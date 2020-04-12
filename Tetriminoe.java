@@ -1,11 +1,7 @@
 import edu.princeton.cs.introcs.StdDraw;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-import java.lang.Object.*;
-
 
 public class Tetriminoe {
     public static Shape I = new Shape("I");
@@ -324,7 +320,7 @@ public class Tetriminoe {
         for(int i=3; i<tet.blockList.size(); i++) {
             if (i + 1 >= tet.blockList.size())
                 i = i - tet.blockList.size() + 1;
-            if (tet.blockList.get(2).getY() - (2.0 *halfWidth +  lineWidth) == tet.blockList.get(i).getY()) {
+            if (tet.blockList.get(2).getY()-(2.0*halfWidth+lineWidth) == tet.blockList.get(i).getY()) {
                 flag = 0;
                 break;
             }
@@ -337,13 +333,13 @@ public class Tetriminoe {
 
         flag = 1;
         for(int i=0; i<3; i++){
-            if(tet.blockList.get(3).getY()-(2.0*halfWidth+lineWidth)==tet.blockList.get(i).getY()) {
+            if(tet.blockList.get(3).getY()-(2.0*halfWidth+lineWidth) == tet.blockList.get(i).getY()) {
                 flag = 0;
                 break;
             }
         }
         if (flag == 1)
-            bottom.add(tet.blockList.get(2));
+            bottom.add(tet.blockList.get(3));
 
         return bottom;
     }
@@ -400,7 +396,7 @@ public class Tetriminoe {
             }
         }
         if (flag == 1)
-            leftWard.add(tet.blockList.get(2));
+            leftWard.add(tet.blockList.get(3));
 
         return leftWard;
     }
@@ -686,40 +682,45 @@ public class Tetriminoe {
             }
         }
 
+    /*
     public void deleteRows(ArrayList<tBlock> drawList, int score){
-        boolean flag = true;
+        int counter = 0;
         ArrayList<Double> rows = new ArrayList<>();
         // check occurrence of full rows
         for (double y = (0.5 * lineWidth + halfWidth); y < canvasHeight; y += halfWidth * 2.0 + lineWidth){
-            for (double x = (0.5 * lineWidth + halfWidth); x < newCanvasWidth - (100 + halfWidth + lineWidth * 0.5); x += lineWidth + halfWidth){
+            for (double x = (0.5 * lineWidth + halfWidth); x < newCanvasWidth - (100 + halfWidth + lineWidth); x += lineWidth + halfWidth * 2.0){
                 for (tBlock t : drawList){
-                    if (!(t.getX() == x && t.getY() == y)){
-                        flag = false;
-                        break;
+                    if ((t.getX() == x && t.getY() == y)){
+                        counter ++;
                     }
                 }
             }
-            if (flag)
+            if (counter == 8)
                 rows.add(y);
+            counter = 0;
         }
         // delete full rows from the drawlist
+        ArrayList<tBlock> willRemove = new ArrayList<>();
         for (tBlock t : drawList){
             for (double y : rows){
-                if (t.getY() == y)
+                if (t.getY() == y) {
                     // update score
                     score += t.getValue();
-                    drawList.remove(t);
+                    willRemove.add(t);
+                }
             }
         }
+        drawList.removeAll(willRemove);
         // move rows which were above deleted rows 1 block down
         for (tBlock t : drawList){
             for (double y : rows){
-                if (t.getY() == y + (halfWidth * 2.0 + lineWidth)) {
+                if (t.getY() > y) {
                     t.setY(t.getY() - (halfWidth * 2.0 + lineWidth));
                 }
             }
         }
     }
+    */
 
     public ArrayList<tBlock> drawNext(Shape type, double width, double height, double halfW, double lineW){
         String switchVar = type.toString();
