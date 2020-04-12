@@ -18,6 +18,7 @@ public class Main {
         StdDraw.setXscale(0,newCanvasWidth);   StdDraw.setYscale(0, canvasHeight);
         StdDraw.setPenRadius(lineWidth/canvasHeight);
         StdDraw.setPenColor(StdDraw.BLACK);
+        int score = 0;
 
         // Every block that needs to be drawn
         ArrayList<tBlock> drawList = new ArrayList<>();
@@ -28,7 +29,7 @@ public class Main {
         ArrayList<tBlock> blockList = new ArrayList<>();
         double counter = 0.0;
         while (true)  {
-            drawGameEnvironment(newCanvasWidth, canvasHeight, lineWidth, rows, cols, blockHeight, canvasWidth, blockWidth);
+            drawGameEnvironment(newCanvasWidth, canvasHeight, lineWidth, rows, cols, blockHeight, canvasWidth, blockWidth, score);
             StdDraw.clear();
 
             // New tetriminoe every 12 cycles
@@ -62,7 +63,7 @@ public class Main {
                 if (StdDraw.isKeyPressed(39))
                     tet.moveRight(tet, lineWidth, blockWidth/2.0, drawList);
                 StdDraw.clear();
-                drawGameEnvironment(newCanvasWidth, canvasHeight, lineWidth, rows, cols, blockHeight, canvasWidth, blockWidth);
+                drawGameEnvironment(newCanvasWidth, canvasHeight, lineWidth, rows, cols, blockHeight, canvasWidth, blockWidth, score);
                 tet.drawTet(drawList, blockWidth/2.0);
                 tet.drawTet(blockList, (blockWidth/2.0)*0.3);
                 StdDraw.show();
@@ -70,7 +71,7 @@ public class Main {
                 count++;
             }
                 StdDraw.clear();
-                drawGameEnvironment(newCanvasWidth, canvasHeight, lineWidth, rows, cols, blockHeight, canvasWidth, blockWidth);
+                drawGameEnvironment(newCanvasWidth, canvasHeight, lineWidth, rows, cols, blockHeight, canvasWidth, blockWidth, score);
                 tet.drawTet(drawList, blockWidth/2.0);
                 tet.drawTet(blockList, (blockWidth/2.0)*0.3);
                 StdDraw.show();
@@ -79,7 +80,7 @@ public class Main {
                 counter++;
         }
     }
-    public static void drawGameEnvironment(double newCanvasWidth, double canvasHeight, double lineWidth, double rows, double cols, double blockHeight, double canvasWidth, double blockWidth){
+    public static void drawGameEnvironment(double newCanvasWidth, double canvasHeight, double lineWidth, double rows, double cols, double blockHeight, double canvasWidth, double blockWidth, int score){
         for(double i = 0; i<=rows; i++)
             StdDraw.line(0.0, i*(blockHeight + lineWidth), canvasWidth, i*(blockHeight + lineWidth));
         for(double i = 0; i<=cols; i++)
@@ -87,6 +88,7 @@ public class Main {
         Font font = new Font(Font.DIALOG, Font.BOLD, 15 );
         StdDraw.setFont(font);
         StdDraw.text(newCanvasWidth-50, canvasHeight-50,"SCORE");
+        StdDraw.text(newCanvasWidth-50, canvasHeight-75,String.valueOf(score));
         StdDraw.text(newCanvasWidth-50, 200,"NEXT");
     }
 

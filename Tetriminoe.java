@@ -261,7 +261,7 @@ public class Tetriminoe {
             ArrayList<tBlock> workWithRight = findRightward(tet);
             for(tBlock t: workWithRight){
                 // check if it exceeds borders
-                if ((t.getX() >= newCanvasWidth - (0.5 * lineWidth + halfWidth + 100))) {
+                if ((t.getX() >= newCanvasWidth - (lineWidth + halfWidth + 100))) {
                     flag = 0;
                     break;
                 }
@@ -457,7 +457,7 @@ public class Tetriminoe {
             }
         }
         if (flag == 1)
-            rightWard.add(tet.blockList.get(2));
+            rightWard.add(tet.blockList.get(3));
 
         return rightWard;
     }
@@ -686,7 +686,7 @@ public class Tetriminoe {
             }
         }
 
-    public void deleteRows(ArrayList<tBlock> drawList){
+    public void deleteRows(ArrayList<tBlock> drawList, int score){
         boolean flag = true;
         ArrayList<Double> rows = new ArrayList<>();
         // check occurrence of full rows
@@ -706,6 +706,8 @@ public class Tetriminoe {
         for (tBlock t : drawList){
             for (double y : rows){
                 if (t.getY() == y)
+                    // update score
+                    score += t.getValue();
                     drawList.remove(t);
             }
         }
