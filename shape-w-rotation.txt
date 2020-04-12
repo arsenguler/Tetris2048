@@ -1,0 +1,306 @@
+
+    public class shapeS extends Tetriminoe {
+            public ArrayList<tBlock> blockList = new ArrayList<>();
+            private shapeS() {
+                blockList.add(block0 = new tBlock());
+                blockList.add(block1 = new tBlock());
+                blockList.add(block2 = new tBlock());
+                blockList.add(block3 = new tBlock());
+            }
+
+            public void generateS(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (3 * halfWidth + 1.5 * lineWidth));
+                block1.setX(block0.getX() + (lineWidth + 2.0*halfWidth));
+                block1.setY(block0.getY());
+                block2.setX(block1.getX());
+                block2.setY(block1.getY() + (lineWidth + 2.0*halfWidth));
+                block3.setX(block2.getX() + (lineWidth + 2.0*halfWidth));
+                block3.setY(block2.getY());
+            }
+
+            // 1 birim sa? : (lineWidth + 2.0*halfWidth) , 1 birim a?a??:canvasHeight - (3 * halfWidth + 1.5 * lineWidth)
+            //right rotation 
+            public void generateSR(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+            	block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
+                block1.setX(block0.getX());
+                block1.setY(block0.getY()-(lineWidth + 2 * halfWidth));
+                block2.setX(block1.getX() + (lineWidth + 2 * halfWidth));
+                block2.setY(block1.getY());
+                block3.setX(block2.getX() );
+                block3.setY(block2.getY() - (lineWidth + 2 * halfWidth));
+            }
+            
+            
+            public void generateS_next(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(newCanvasWidth-100+halfWidth*2.5);
+                block0.setY(150.0);
+                block1.setX(block0.getX() + (lineWidth + 2.0*halfWidth));
+                block1.setY(block0.getY());
+                block2.setX(block1.getX());
+                block2.setY(block1.getY() + (lineWidth + 2.0*halfWidth));
+                block3.setX(block2.getX() + (lineWidth + 2.0*halfWidth));
+                block3.setY(block2.getY());
+            }
+        }
+
+    public class shapeI extends Tetriminoe {
+            public ArrayList<tBlock> blockList = new ArrayList<>();
+            private shapeI() {
+                blockList.add(block0 = new tBlock());
+                blockList.add(block1 = new tBlock());
+                blockList.add(block2 = new tBlock());
+                blockList.add(block3 = new tBlock());
+            }
+
+            public void generateI(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
+                block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
+                block1.setY(block0.getY());
+                block2.setX(block1.getX() + (lineWidth + 2 * halfWidth));
+                block2.setY(block0.getY());
+                block3.setX(block2.getX() + (lineWidth + 2 * halfWidth));
+                block3.setY(block0.getY());
+            }
+            
+            public void generateIR(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
+                block1.setX(block0.getX());
+                block1.setY(block0.getY() - (lineWidth + 2 * halfWidth));
+                block2.setX(block1.getX());
+                block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
+                block3.setX(block2.getX() );
+                block3.setY(block2.getY()- (lineWidth + 2 * halfWidth));
+            }
+            
+            
+            public void generateI_next(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(newCanvasWidth-100+halfWidth*2.0);
+                block0.setY(150.0);
+                block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
+                block1.setY(block0.getY());
+                block2.setX(block1.getX() + (lineWidth + 2 * halfWidth));
+                block2.setY(block0.getY());
+                block3.setX(block2.getX() + (lineWidth + 2 * halfWidth));
+                block3.setY(block0.getY());
+            }
+        }
+
+    public class shapeZ extends Tetriminoe {
+            public ArrayList<tBlock> blockList = new ArrayList<>();
+            private shapeZ() {
+                blockList.add(block0 = new tBlock());
+                blockList.add(block1 = new tBlock());
+                blockList.add(block2 = new tBlock());
+                blockList.add(block3 = new tBlock());
+            }
+
+            public void generateZ(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
+                block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
+                block1.setY(block0.getY());
+                block2.setX(block1.getX());
+                block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
+                block3.setX(block2.getX() + (lineWidth + 2 * halfWidth));
+                block3.setY(block2.getY());
+            }
+            
+            public void generateZR(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
+                block1.setX(block0.getX() );
+                block1.setY(block0.getY()- (lineWidth + 2 * halfWidth));
+                block2.setX(block1.getX() - (lineWidth + 2 * halfWidth));
+                block2.setY(block1.getY() );
+                block3.setX(block2.getX() );
+                block3.setY(block2.getY()- (lineWidth + 2 * halfWidth));
+            }
+
+            public void generateZ_next(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(newCanvasWidth-100+halfWidth*2.5);
+                block0.setY(150.0);
+                block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
+                block1.setY(block0.getY());
+                block2.setX(block1.getX());
+                block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
+                block3.setX(block2.getX() + (lineWidth + 2 * halfWidth));
+                block3.setY(block2.getY());
+            }
+        }
+
+    public class shapeO extends Tetriminoe {
+        public ArrayList<tBlock> blockList = new ArrayList<>();
+        private shapeO() {
+            blockList.add(block0 = new tBlock());
+            blockList.add(block1 = new tBlock());
+            blockList.add(block2 = new tBlock());
+            blockList.add(block3 = new tBlock());
+        }
+
+        public void generateO(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+            block0.setX(3.5 * lineWidth + 7 * halfWidth);
+            block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
+            block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
+            block1.setY(block0.getY());
+            block2.setX(block1.getX());
+            block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
+            block3.setX(block2.getX() - (lineWidth + 2.0 * halfWidth));
+            block3.setY(block2.getY());
+        }
+        
+        public void generateOR(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+            block0.setX(3.5 * lineWidth + 7 * halfWidth);
+            block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
+            block1.setX(block0.getX() );
+            block1.setY(block0.getY() - (lineWidth + 2 * halfWidth));
+            block2.setX(block1.getX()- (lineWidth + 2 * halfWidth));
+            block2.setY(block1.getY() );
+            block3.setX(block0.getX() - (lineWidth + 2.0 * halfWidth));
+            block3.setY(block0.getY());
+        }
+
+        public void generateO_next(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+            block0.setX(newCanvasWidth-100+halfWidth*2.5);
+            block0.setY(150.0);
+            block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
+            block1.setY(block0.getY());
+            block2.setX(block1.getX());
+            block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
+            block3.setX(block2.getX() - (lineWidth + 2.0 * halfWidth));
+            block3.setY(block2.getY());
+        }
+    }
+
+    public class shapeT extends Tetriminoe {
+            public ArrayList<tBlock> blockList = new ArrayList<>();
+            private shapeT() {
+                blockList.add(block0 = new tBlock());
+                blockList.add(block1 = new tBlock());
+                blockList.add(block2 = new tBlock());
+                blockList.add(block3 = new tBlock());
+            }
+
+            public void generateT(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
+                block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
+                block1.setY(block0.getY());
+                block2.setX(block1.getX());
+                block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
+                block3.setX(block1.getX() + (lineWidth + 2 * halfWidth));
+                block3.setY(block1.getY());
+            }
+            
+            public void generateTR(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
+                block1.setX(block0.getX());
+                block1.setY(block0.getY() - (lineWidth + 2 * halfWidth));
+                block2.setX(block1.getX() - (lineWidth + 2 * halfWidth));
+                block2.setY(block1.getY());
+                block3.setX(block1.getX() );
+                block3.setY(block1.getY()- (lineWidth + 2 * halfWidth));
+            }
+
+            public void generateT_next(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(newCanvasWidth-100+halfWidth*2.5);
+                block0.setY(150.0);
+                block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
+                block1.setY(block0.getY());
+                block2.setX(block1.getX());
+                block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
+                block3.setX(block1.getX() + (lineWidth + 2 * halfWidth));
+                block3.setY(block1.getY());
+            }
+        }
+
+    public class shapeL extends Tetriminoe {
+            public ArrayList<tBlock> blockList = new ArrayList<>();
+            private shapeL() {
+                blockList.add(block0 = new tBlock());
+                blockList.add(block1 = new tBlock());
+                blockList.add(block2 = new tBlock());
+                blockList.add(block3 = new tBlock());
+            }
+
+            public void generateL(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (3 * halfWidth + 1.5 * lineWidth));
+                block1.setX(block0.getX());
+                block1.setY(block0.getY() + (lineWidth + 2 * halfWidth));
+                block2.setX(block1.getX() + (lineWidth + 2 * halfWidth));
+                block2.setY(block1.getY());
+                block3.setX(block2.getX() + (lineWidth + 2 * halfWidth));
+                block3.setY(block2.getY());
+            }
+            
+
+            public void generateLR(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (3 * halfWidth + 1.5 * lineWidth));
+                block1.setX(block0.getX()+ (lineWidth + 2 * halfWidth));
+                block1.setY(block0.getY() );
+                block2.setX(block1.getX() );
+                block2.setY(block1.getY() -  (lineWidth + 2 * halfWidth));
+                block3.setX(block2.getX() );
+                block3.setY(block2.getY() - (lineWidth + 2 * halfWidth));
+            }
+
+            public void generateL_next(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(newCanvasWidth-100+halfWidth*2.5);
+                block0.setY(150.0);
+                block1.setX(block0.getX());
+                block1.setY(block0.getY() + (lineWidth + 2 * halfWidth));
+                block2.setX(block1.getX() + (lineWidth + 2 * halfWidth));
+                block2.setY(block1.getY());
+                block3.setX(block2.getX() + (lineWidth + 2 * halfWidth));
+                block3.setY(block2.getY());
+            }
+        }
+
+    public class shapeJ extends Tetriminoe {
+            public ArrayList<tBlock> blockList = new ArrayList<>();
+            private shapeJ() {
+                blockList.add(block0 = new tBlock());
+                blockList.add(block1 = new tBlock());
+                blockList.add(block2 = new tBlock());
+                blockList.add(block3 = new tBlock());
+            }
+
+            public void generateJ(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
+                block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
+                block1.setY(block0.getY());
+                block2.setX(block1.getX() + (lineWidth + 2 * halfWidth));
+                block2.setY(block1.getY());
+                block3.setX(block2.getX());
+                block3.setY(block2.getY() - (lineWidth + 2 * halfWidth));
+            }
+            
+            public void generateJR(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(2.5 * lineWidth + 5 * halfWidth);
+                block0.setY(canvasHeight - (halfWidth + 0.5 * lineWidth));
+                block1.setX(block0.getX());
+                block1.setY(block0.getY() - (lineWidth + 2 * halfWidth));
+                block2.setX(block1.getX());
+                block2.setY(block1.getY() - (lineWidth + 2 * halfWidth));
+                block3.setX(block2.getX()- (lineWidth + 2 * halfWidth));
+                block3.setY(block2.getY() );
+            }
+            
+            public void generateJ_next(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
+                block0.setX(newCanvasWidth-100+halfWidth*2.5);
+                block0.setY(150.0);
+                block1.setX(block0.getX() + (lineWidth + 2 * halfWidth));
+                block1.setY(block0.getY());
+                block2.setX(block1.getX() + (lineWidth + 2 * halfWidth));
+                block2.setY(block1.getY());
+                block3.setX(block2.getX());
+                block3.setY(block2.getY() - (lineWidth + 2 * halfWidth));
+            }
+        }
