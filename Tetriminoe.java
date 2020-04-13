@@ -177,8 +177,7 @@ public class Tetriminoe {
     public Tetriminoe() {
         }
 
-    public void rotatetTet(){
-
+    public void rotatetTet(Tetriminoe tet){
     }
 
     public void moveTet(Tetriminoe tet, double lineWidth, double halfWidth, ArrayList<tBlock> drawList){
@@ -289,172 +288,96 @@ public class Tetriminoe {
 
     private ArrayList<tBlock> findBottom(Tetriminoe tet){
         ArrayList<tBlock> bottom = new ArrayList<>();
-        int flag = 1;
-        for(int i=1; i<tet.blockList.size(); i++){
-            if(tet.blockList.get(0).getY()-(2.0*halfWidth+lineWidth)==tet.blockList.get(i).getY()) {
-                flag = 0;
-                break;
-            }
+        ArrayList<Double> sameX = new ArrayList<>();
+        for (tBlock t : tet.blockList){
+            if (sameX.isEmpty())
+                sameX.add(t.getX());
+            else if (!sameX.contains(t.getX()))
+                sameX.add(t.getX());
         }
-        if (flag == 1)
-            bottom.add(tet.blockList.get(0));
+        ArrayList<Double> lowest = new ArrayList<>();
+        for (Double d : sameX)
+            lowest.add(9999999999999.9);
 
-        flag = 1;
-        int counter = 0;
-        for(int i=2; i<tet.blockList.size(); i++){
-            if (i+1>=tet.blockList.size())
-                i = i-tet.blockList.size()+1;
-            if(tet.blockList.get(1).getY()-(2.0*halfWidth+lineWidth)==tet.blockList.get(i).getY()){
-                flag = 0;
-                break;
+        for (tBlock t : tet.blockList){
+            for (int i = 0 ; i<lowest.size(); i++) {
+                if (t.getX() == sameX.get(i)) {
+                    if (t.getY() < lowest.get(i))
+                        lowest.set(i, t.getY());
+                }
             }
-            counter++;
-            if (counter>=3)
-                break;
         }
-        if (flag == 1)
-            bottom.add(tet.blockList.get(1));
 
-        flag = 1;
-        counter = 0;
-        for(int i=3; i<tet.blockList.size(); i++) {
-            if (i + 1 >= tet.blockList.size())
-                i = i - tet.blockList.size() + 1;
-            if (tet.blockList.get(2).getY()-(2.0*halfWidth+lineWidth) == tet.blockList.get(i).getY()) {
-                flag = 0;
-                break;
-            }
-            counter ++;
-            if (counter>=3)
-                break;
-        }
-            if (flag == 1)
-                bottom.add(tet.blockList.get(2));
-
-        flag = 1;
-        for(int i=0; i<3; i++){
-            if(tet.blockList.get(3).getY()-(2.0*halfWidth+lineWidth) == tet.blockList.get(i).getY()) {
-                flag = 0;
-                break;
+        for (tBlock t : tet.blockList){
+            for ( int i = 0; i<sameX.size(); i++){
+                if (t.getY() == lowest.get(i) && t.getX() == sameX.get(i))
+                    bottom.add(t);
             }
         }
-        if (flag == 1)
-            bottom.add(tet.blockList.get(3));
 
         return bottom;
     }
 
     private ArrayList<tBlock> findLeftward(Tetriminoe tet){
         ArrayList<tBlock> leftWard = new ArrayList<>();
-        int flag = 1;
-        for(int i=1; i<tet.blockList.size(); i++){
-            if(tet.blockList.get(0).getX()-(2.0*halfWidth+lineWidth)==tet.blockList.get(i).getX()) {
-                flag = 0;
-                break;
-            }
+        ArrayList<Double> sameY = new ArrayList<>();
+        for (tBlock t : tet.blockList){
+            if (sameY.isEmpty())
+                sameY.add(t.getY());
+            else if (!sameY.contains(t.getY()))
+                sameY.add(t.getY());
         }
-        if (flag == 1)
-            leftWard.add(tet.blockList.get(0));
+        ArrayList<Double> lowest = new ArrayList<>();
+        for (Double d : sameY)
+            lowest.add(9999999999999.9);
 
-        flag = 1;
-        int counter = 0;
-        for(int i=2; i<tet.blockList.size(); i++){
-            if (i+1>=tet.blockList.size())
-                i = i-tet.blockList.size()+1;
-            if(tet.blockList.get(1).getX()-(2.0*halfWidth+lineWidth)==tet.blockList.get(i).getX()){
-                flag = 0;
-                break;
+        for (tBlock t : tet.blockList){
+            for (int i = 0 ; i<lowest.size(); i++) {
+                if (t.getY() == sameY.get(i)) {
+                    if (t.getX() < lowest.get(i))
+                        lowest.set(i, t.getX());
+                }
             }
-            counter++;
-            if (counter>=3)
-                break;
         }
-        if (flag == 1)
-            leftWard.add(tet.blockList.get(1));
 
-        flag = 1;
-        counter = 0;
-        for(int i=3; i<tet.blockList.size(); i++) {
-            if (i + 1 >= tet.blockList.size())
-                i = i - tet.blockList.size() + 1;
-            if (tet.blockList.get(2).getX() - (2.0 * halfWidth + lineWidth) == tet.blockList.get(i).getX()) {
-                flag = 0;
-                break;
-            }
-            counter ++;
-            if (counter>=3)
-                break;
-        }
-        if (flag == 1)
-            leftWard.add(tet.blockList.get(2));
-
-        flag = 1;
-        for(int i=0; i<3; i++){
-            if(tet.blockList.get(3).getX()-(2.0*halfWidth+lineWidth)==tet.blockList.get(i).getX()){
-                flag = 0;
-                break;
+        for (tBlock t : tet.blockList){
+            for ( int i = 0; i<sameY.size(); i++){
+                if (t.getX() == lowest.get(i) && t.getY() == sameY.get(i))
+                    leftWard.add(t);
             }
         }
-        if (flag == 1)
-            leftWard.add(tet.blockList.get(3));
 
         return leftWard;
     }
 
     private ArrayList<tBlock> findRightward(Tetriminoe tet){
         ArrayList<tBlock> rightWard = new ArrayList<>();
-        int flag = 1;
-        for(int i=1; i<tet.blockList.size(); i++){
-            if(tet.blockList.get(0).getX()+(2.0*halfWidth+lineWidth)==tet.blockList.get(i).getX()) {
-                flag = 0;
-                break;
+        ArrayList<Double> sameY = new ArrayList<>();
+        for (tBlock t : tet.blockList){
+            if (sameY.isEmpty())
+                sameY.add(t.getY());
+            else if (!sameY.contains(t.getY()))
+                sameY.add(t.getY());
+        }
+        ArrayList<Double> highest = new ArrayList<>();
+        for (Double d : sameY)
+            highest.add(0.0);
+
+        for (tBlock t : tet.blockList){
+            for (int i = 0 ; i<highest.size(); i++) {
+                if (t.getY() == sameY.get(i)) {
+                    if (t.getX() > highest.get(i))
+                        highest.set(i, t.getX());
+                }
             }
         }
-        if (flag == 1)
-            rightWard.add(tet.blockList.get(0));
 
-        flag = 1;
-        int counter = 0;
-        for(int i=2; i<tet.blockList.size(); i++){
-            if (i+1>=tet.blockList.size())
-                i = i-tet.blockList.size()+1;
-            if(tet.blockList.get(1).getX()+(2.0*halfWidth+lineWidth)==tet.blockList.get(i).getX()){
-                flag = 0;
-                break;
-            }
-            counter++;
-            if (counter>=3)
-                break;
-        }
-        if (flag == 1)
-            rightWard.add(tet.blockList.get(1));
-
-        flag = 1;
-        counter = 0;
-        for(int i=3; i<tet.blockList.size(); i++) {
-            if (i + 1 >= tet.blockList.size())
-                i = i - tet.blockList.size() + 1;
-            if (tet.blockList.get(2).getX() + (2.0 *halfWidth +  lineWidth) == tet.blockList.get(i).getX()) {
-                flag = 0;
-                break;
-            }
-            counter ++;
-            if (counter>=3)
-                break;
-        }
-        if (flag == 1)
-            rightWard.add(tet.blockList.get(2));
-
-        flag = 1;
-        for(int i=0; i<3; i++){
-            if(tet.blockList.get(3).getX()+(2.0*halfWidth+lineWidth)==tet.blockList.get(i).getX()){
-                flag = 0;
-                break;
+        for (tBlock t : tet.blockList){
+            for ( int i = 0; i<sameY.size(); i++){
+                if (t.getX() == highest.get(i) && t.getY() == sameY.get(i))
+                    rightWard.add(t);
             }
         }
-        if (flag == 1)
-            rightWard.add(tet.blockList.get(3));
-
         return rightWard;
     }
 

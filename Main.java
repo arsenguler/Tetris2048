@@ -98,14 +98,14 @@ public class Main {
         // check occurrence of full rows
         for (double y = (0.5 * lineWidth + halfWidth); y < canvasHeight; y += halfWidth * 2.0 + lineWidth){
             int counter = 0;
-            for (double x = (0.5 * lineWidth + halfWidth); x <= newCanvasWidth - (100 + halfWidth + lineWidth); x += lineWidth + halfWidth * 2.0){
+            for (double x = (0.5 * lineWidth + halfWidth); x < newCanvasWidth - (100 + lineWidth); x += lineWidth + halfWidth * 2.0){
                 for (tBlock t : drawList){
                     if ((t.getX() == x && t.getY() == y)){
                         counter ++;
                     }
                 }
             }
-            if (counter == 7) {
+            if (counter == 8) {
                 rows.add(y);
                 flag = true;
             }
