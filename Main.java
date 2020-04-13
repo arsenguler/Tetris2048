@@ -1,4 +1,6 @@
 import edu.princeton.cs.introcs.StdDraw;
+
+import javax.lang.model.type.ArrayType;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.*;
@@ -23,6 +25,7 @@ public class Main {
         ArrayList<tBlock> drawList = new ArrayList<>();
         StdDraw.enableDoubleBuffering();
 
+        boolean hasMoved;
         Tetriminoe tet = null;
         Shape shape = null;
         ArrayList<tBlock> blockList = new ArrayList<>();
@@ -30,7 +33,6 @@ public class Main {
         while (true)  {
             drawGameEnvironment(newCanvasWidth, canvasHeight, lineWidth, rows, cols, blockHeight, canvasWidth, blockWidth, score);
             StdDraw.clear();
-
             // New tetriminoe every 12 cycles
             if(counter % 12 == 0.0) {
                 if(null == shape) {
@@ -49,11 +51,13 @@ public class Main {
                         drawList.add(t);
                     }
                 }
+                hasMoved = true;
             }
             else{
                 // move the tetriminoe 1 block below
-                tet.moveTet(tet, lineWidth, blockWidth/2.0, drawList);
+                hasMoved = tet.moveTet(tet, lineWidth, blockWidth/2.0, drawList);
             }
+            // left-right movement and rotation
             for(int count = 0; count<10; count++){
                 // check if left key pressed
                 if (StdDraw.isKeyPressed(37))
@@ -61,6 +65,18 @@ public class Main {
                 // check if right key pressed
                 if (StdDraw.isKeyPressed(39))
                     tet.moveRight(tet, lineWidth, blockWidth/2.0, drawList);
+                /*
+                // check if up key pressed
+                if (StdDraw.isKeyPressed(38)){
+                    String keyPressed = "up";
+                    tet.rotatetTet(drawList, keyPressed);
+                }
+                // check if down key pressed
+                if (StdDraw.isKeyPressed(40)){
+                    String keyPressed = "down";
+                    tet.rotatetTet(drawList, keyPressed);
+                }
+                 */
                 StdDraw.clear();
                 drawGameEnvironment(newCanvasWidth, canvasHeight, lineWidth, rows, cols, blockHeight, canvasWidth, blockWidth, score);
                 tet.drawTet(drawList, blockWidth/2.0);
@@ -69,8 +85,18 @@ public class Main {
                 StdDraw.pause((int) (0.1 * Math.pow(10, 3)));
                 count++;
             }
+
                 StdDraw.clear();
                 score = deleteRows(drawList, score, lineWidth, blockWidth * 0.5, canvasHeight, newCanvasWidth);
+                if (!hasMoved){
+                    int test = score;
+                    score = mergeBlocks(drawList, score, lineWidth, blockWidth * 0.5);
+                    while (test != score){
+                        test = score;
+                        score = mergeBlocks(drawList, score, lineWidth, blockWidth * 0.5);
+                    }
+                    counter = 11.0;
+                }
                 drawGameEnvironment(newCanvasWidth, canvasHeight, lineWidth, rows, cols, blockHeight, canvasWidth, blockWidth, score);
                 tet.drawTet(drawList, blockWidth/2.0);
                 tet.drawTet(blockList, (blockWidth/2.0)*0.3);
@@ -133,6 +159,58 @@ public class Main {
             }
         }
         else return score;
+        return score;
+    }
+
+    public static int mergeBlocks(ArrayList<tBlock> drawList, int score, double lineWidth, double halfWidth) {
+        boolean flag = false;
+        ArrayList<tBlock> sorted = new ArrayList<>();
+        ArrayList<tBlock> temp = drawList;
+        ArrayList<tBlock> willRemove = new ArrayList<>();
+        ArrayList<tBlock> skip = new ArrayList<>();
+        // sort drawList from top to bottom
+        for (tBlock tc : drawList) {
+            double nibber = 0.0;
+            for (tBlock t : temp) {
+                if (!skip.contains(t) && t.getY() >= nibber) {
+                    nibber = t.getY();
+                    skip.add(t);
+                }
+            }
+            for (tBlock tb : drawList) {
+                if (tb.getY() >= nibber)
+                    sorted.add(tb);
+            }
+        }
+        for (tBlock t : sorted) {
+            for (tBlock tb : sorted) {
+                // if there's a block above another with the same value
+                if (t.getX() == tb.getX() && t.getY() + (lineWidth + 2.0 * halfWidth) == tb.getY()) {
+                    if (t.getValue() == tb.getValue()) {
+                        flag = true;
+                        t.setValue(t.getValue() + tb.getValue());     // sum their values
+                        score += t.getValue();      // update score
+                        willRemove.add(tb);
+                    }
+                }
+            }
+        }
+        if (!willRemove.isEmpty()) {
+            // find blocks that are not "4-connected" to any other block
+            ArrayList<tBlock> workWith = new ArrayList<>();
+            for (tBlock t : drawList) {
+                int bool = 1;
+                for (tBlock tb : drawList) {
+                    if (t.getX() == tb.getX() && (t.getY() + (halfWidth * 2.0 + lineWidth) == tb.getY() || t.getY() - (halfWidth * 2.0 + lineWidth) == tb.getY()))
+                        bool = 0;
+                    if (t.getY() == tb.getY() && (t.getX() + (halfWidth * 2.0 + lineWidth) == tb.getX() || t.getX() - (halfWidth * 2.0 + lineWidth) == tb.getX()))
+                        bool = 0;
+                }
+                if (bool == 1)
+                    willRemove.add(t);
+            }
+            drawList.removeAll(willRemove);     // remove merged and "not 4-connected" blocks
+        }
         return score;
     }
 }

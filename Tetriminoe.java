@@ -22,6 +22,7 @@ public class Tetriminoe {
     private double newCanvasWidth;
     private double canvasHeight;
     private Shape shape;
+    private boolean isRotated = false;
 
     /*
     public Tetriminoe(double lineWidth, double halfWidth, double newCanvasWidth, double canvasHeight) {
@@ -177,10 +178,350 @@ public class Tetriminoe {
     public Tetriminoe() {
         }
 
-    public void rotatetTet(Tetriminoe tet){
+    public void rotatetTet(ArrayList<tBlock> drawList, String keyPressed){
+        if (shape == I){
+            if (!isRotated && keyPressed == "down") {
+                int flag = 1;
+                for (tBlock t : drawList){
+                    if (t.getX() == block0.getX() && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() && t.getY() == block0.getY() - 2.0 *(lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() && t.getY() == block0.getY() - 3.0 *(lineWidth + halfWidth))
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX());
+                    block1.setY(block0.getY() - (lineWidth + halfWidth));
+                    block2.setX(block1.getX());
+                    block2.setY(block1.getY() - (lineWidth + halfWidth));
+                    block3.setX(block2.getX());
+                    block3.setY(block2.getY() - (lineWidth + halfWidth));
+                    this.isRotated = true;
+                }
+            }
+            else if (isRotated && keyPressed == "up") {
+                int flag = 1;
+                for (tBlock t : drawList){
+                    if (t.getY() == block0.getY() && t.getX() == block0.getX() + (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getY() == block0.getY() && t.getX() == block0.getX() + 2.0 *(lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getY() == block0.getY() && t.getX() == block0.getX() + 3.0 *(lineWidth + halfWidth))
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX() + (lineWidth + halfWidth));
+                    block1.setY(block0.getY());
+                    block2.setX(block1.getX() + (lineWidth + halfWidth));
+                    block2.setY(block1.getY());
+                    block3.setX(block2.getX() + (lineWidth + halfWidth));
+                    block3.setY(block2.getY());
+                    this.isRotated = false;
+                }
+            }
+            else return;
+            // Update tetriminoe's place in drawList
+            drawList.get(drawList.size()-4).setX(blockList.get(0).getX());
+            drawList.get(drawList.size()-4).setY(blockList.get(0).getY());
+            drawList.get(drawList.size()-3).setX(blockList.get(1).getX());
+            drawList.get(drawList.size()-3).setY(blockList.get(1).getY());
+            drawList.get(drawList.size()-2).setX(blockList.get(2).getX());
+            drawList.get(drawList.size()-2).setY(blockList.get(2).getY());
+            drawList.get(drawList.size()-1).setX(blockList.get(3).getX());
+            drawList.get(drawList.size()-1).setY(blockList.get(3).getY());
+        }
+        if (shape == S) {
+            if (!isRotated && keyPressed == "down") {
+                int flag = 1;
+                for (tBlock t : drawList) {
+                    if (t.getX() == block0.getX() && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY() - 2.0 * (lineWidth + halfWidth))
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX());
+                    block1.setY(block0.getY() - (lineWidth + 2.0 * halfWidth));
+                    block2.setX(block1.getX() + (lineWidth + 2.0 * halfWidth));
+                    block2.setY(block1.getY());
+                    block3.setX(block2.getX());
+                    block3.setY(block2.getY() - (lineWidth + 2.0 * halfWidth));
+                    this.isRotated = true;
+                }
+            }
+            else if (isRotated && keyPressed == "up") {
+                int flag = 1;
+                for (tBlock t : drawList) {
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth)&& t.getY() == block0.getY() )
+                        flag = 0;
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY() + (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() + 2.0*(lineWidth + halfWidth) && t.getY() == block0.getY() + (lineWidth + halfWidth) )
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX() + (lineWidth + 2.0 * halfWidth));
+                    block1.setY(block0.getY());
+                    block2.setX(block1.getX());
+                    block2.setY(block1.getY() + (lineWidth + 2.0 * halfWidth));
+                    block3.setX(block2.getX() + (lineWidth + 2.0 * halfWidth));
+                    block3.setY(block2.getY());
+                    this.isRotated = false;
+                }
+            }
+            else return;
+            // Update tetriminoe's place in drawList
+            drawList.get(drawList.size()-4).setX(blockList.get(0).getX());
+            drawList.get(drawList.size()-4).setY(blockList.get(0).getY());
+            drawList.get(drawList.size()-3).setX(blockList.get(1).getX());
+            drawList.get(drawList.size()-3).setY(blockList.get(1).getY());
+            drawList.get(drawList.size()-2).setX(blockList.get(2).getX());
+            drawList.get(drawList.size()-2).setY(blockList.get(2).getY());
+            drawList.get(drawList.size()-1).setX(blockList.get(3).getX());
+            drawList.get(drawList.size()-1).setY(blockList.get(3).getY());
+        }
+        if (shape == Z){
+            if (!isRotated && keyPressed == "down") {
+                int flag = 1;
+                for (tBlock t : drawList){
+                    if (t.getX() == block0.getX() && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() - (lineWidth + halfWidth) && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() - (lineWidth + halfWidth) && t.getY() == block0.getY() - 2.0 *(lineWidth + halfWidth))
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX());
+                    block1.setY(block0.getY() - (lineWidth + halfWidth));
+                    block2.setX(block1.getX() - (lineWidth + halfWidth));
+                    block2.setY(block1.getY());
+                    block3.setX(block2.getX());
+                    block3.setY(block2.getY() - (lineWidth + halfWidth));
+                    this.isRotated = true;
+                }
+            }
+            else if (isRotated && keyPressed == "up") {
+                int flag = 1;
+                for (tBlock t : drawList){
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY())
+                        flag = 0;
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() + 2.0*(lineWidth + halfWidth) && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX() + (lineWidth + halfWidth));
+                    block1.setY(block0.getY());
+                    block2.setX(block1.getX());
+                    block2.setY(block1.getY() - (lineWidth + halfWidth));
+                    block3.setX(block2.getX() + (lineWidth + halfWidth));
+                    block3.setY(block2.getY() );
+                    this.isRotated = false;
+                }
+            }
+            else return;
+            // Update tetriminoe's place in drawList
+            drawList.get(drawList.size()-4).setX(blockList.get(0).getX());
+            drawList.get(drawList.size()-4).setY(blockList.get(0).getY());
+            drawList.get(drawList.size()-3).setX(blockList.get(1).getX());
+            drawList.get(drawList.size()-3).setY(blockList.get(1).getY());
+            drawList.get(drawList.size()-2).setX(blockList.get(2).getX());
+            drawList.get(drawList.size()-2).setY(blockList.get(2).getY());
+            drawList.get(drawList.size()-1).setX(blockList.get(3).getX());
+            drawList.get(drawList.size()-1).setY(blockList.get(3).getY());
+        }
+        if (shape == L){
+            if (!isRotated && keyPressed == "down") {
+                int flag = 1;
+                for (tBlock t : drawList){
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY())
+                        flag = 0;
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY() - 2.0 *(lineWidth + halfWidth))
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX() + (lineWidth + halfWidth));
+                    block1.setY(block0.getY());
+                    block2.setX(block1.getX());
+                    block2.setY(block1.getY() - (lineWidth + halfWidth));
+                    block3.setX(block2.getX());
+                    block3.setY(block2.getY() - (lineWidth + halfWidth));
+                    this.isRotated = true;
+                }
+            }
+            else if (isRotated && keyPressed == "up") {
+                int flag = 1;
+                for (tBlock t : drawList){
+                    if (t.getX() == block0.getX() && t.getY() == block0.getY() + (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY() + (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() + 2.0*(lineWidth + halfWidth) && t.getY() == block0.getY() + (lineWidth + halfWidth))
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX());
+                    block1.setY(block0.getY() + (lineWidth + halfWidth));
+                    block2.setX(block1.getX() + (lineWidth + halfWidth));
+                    block2.setY(block1.getY());
+                    block3.setX(block2.getX() + (lineWidth + halfWidth));
+                    block3.setY(block2.getY());
+                    this.isRotated = false;
+                }
+            }
+            else return;
+            // Update tetriminoe's place in drawList
+            drawList.get(drawList.size()-4).setX(blockList.get(0).getX());
+            drawList.get(drawList.size()-4).setY(blockList.get(0).getY());
+            drawList.get(drawList.size()-3).setX(blockList.get(1).getX());
+            drawList.get(drawList.size()-3).setY(blockList.get(1).getY());
+            drawList.get(drawList.size()-2).setX(blockList.get(2).getX());
+            drawList.get(drawList.size()-2).setY(blockList.get(2).getY());
+            drawList.get(drawList.size()-1).setX(blockList.get(3).getX());
+            drawList.get(drawList.size()-1).setY(blockList.get(3).getY());
+        }
+        if (shape == J){
+            if (!isRotated && keyPressed == "down") {
+                int flag = 1;
+                for (tBlock t : drawList){
+                    if (t.getX() == block0.getX() && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() && t.getY() == block0.getY() - 2.0 *(lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() - (lineWidth + halfWidth) && t.getY() == block0.getY() - 2.0 *(lineWidth + halfWidth))
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX());
+                    block1.setY(block0.getY() - (lineWidth + halfWidth));
+                    block2.setX(block1.getX());
+                    block2.setY(block1.getY() - (lineWidth + halfWidth));
+                    block3.setX(block2.getX() - (lineWidth + halfWidth));
+                    block3.setY(block2.getY() - (lineWidth + halfWidth));
+                    this.isRotated = true;
+                }
+            }
+            else if (isRotated && keyPressed == "up") {
+                int flag = 1;
+                for (tBlock t : drawList){
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY() )
+                        flag = 0;
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY())
+                        flag = 0;
+                    if (t.getX() == block0.getX() + 2.0*(lineWidth + halfWidth) && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX() + (lineWidth + halfWidth));
+                    block1.setY(block0.getY());
+                    block2.setX(block1.getX() + (lineWidth + halfWidth));
+                    block2.setY(block1.getY());
+                    block3.setX(block2.getX());
+                    block3.setY(block2.getY() - (lineWidth + halfWidth));
+                    this.isRotated = false;
+                }
+            }
+            else return;
+            // Update tetriminoe's place in drawList
+            drawList.get(drawList.size()-4).setX(blockList.get(0).getX());
+            drawList.get(drawList.size()-4).setY(blockList.get(0).getY());
+            drawList.get(drawList.size()-3).setX(blockList.get(1).getX());
+            drawList.get(drawList.size()-3).setY(blockList.get(1).getY());
+            drawList.get(drawList.size()-2).setX(blockList.get(2).getX());
+            drawList.get(drawList.size()-2).setY(blockList.get(2).getY());
+            drawList.get(drawList.size()-1).setX(blockList.get(3).getX());
+            drawList.get(drawList.size()-1).setY(blockList.get(3).getY());
+        }
+        if (shape == O){
+            return;
+        }
+        if (shape == T){
+            if (!isRotated && keyPressed == "down") {
+                int flag = 1;
+                for (tBlock t : drawList){
+                    if (t.getX() == block0.getX() && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() - (lineWidth + halfWidth) && t.getY() == block0.getY())
+                        flag = 0;
+                    if (t.getX() == block0.getX() && t.getY() == block0.getY() - 2.0 *(lineWidth + halfWidth))
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX());
+                    block1.setY(block0.getY() - (lineWidth + halfWidth));
+                    block2.setX(block1.getX() - (lineWidth + halfWidth));
+                    block2.setY(block1.getY());
+                    block3.setX(block2.getX() + (lineWidth + halfWidth));
+                    block3.setY(block2.getY() - (lineWidth + halfWidth));
+                    this.isRotated = true;
+                }
+            }
+            else if (isRotated && keyPressed == "up") {
+                int flag = 1;
+                for (tBlock t : drawList){
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY())
+                        flag = 0;
+                    if (t.getX() == block0.getX() + (lineWidth + halfWidth) && t.getY() == block0.getY() - (lineWidth + halfWidth))
+                        flag = 0;
+                    if (t.getX() == block0.getX() + 2.0 *(lineWidth + halfWidth) && t.getY() == block0.getY())
+                        flag = 0;
+                }
+                if (flag == 1) {
+                    block0.setX(block0.getX());
+                    block0.setY(block0.getY());
+                    block1.setX(block0.getX() + (lineWidth + halfWidth));
+                    block1.setY(block0.getY());
+                    block2.setX(block1.getX());
+                    block2.setY(block1.getY() - (lineWidth + halfWidth));
+                    block3.setX(block2.getX() + (lineWidth + halfWidth));
+                    block3.setY(block2.getY() + (lineWidth + halfWidth));
+                    this.isRotated = false;
+                }
+            }
+            else return;
+            // Update tetriminoe's place in drawList
+            drawList.get(drawList.size()-4).setX(blockList.get(0).getX());
+            drawList.get(drawList.size()-4).setY(blockList.get(0).getY());
+            drawList.get(drawList.size()-3).setX(blockList.get(1).getX());
+            drawList.get(drawList.size()-3).setY(blockList.get(1).getY());
+            drawList.get(drawList.size()-2).setX(blockList.get(2).getX());
+            drawList.get(drawList.size()-2).setY(blockList.get(2).getY());
+            drawList.get(drawList.size()-1).setX(blockList.get(3).getX());
+            drawList.get(drawList.size()-1).setY(blockList.get(3).getY());
+        }
     }
 
-    public void moveTet(Tetriminoe tet, double lineWidth, double halfWidth, ArrayList<tBlock> drawList){
+    public boolean moveTet(Tetriminoe tet, double lineWidth, double halfWidth, ArrayList<tBlock> drawList){
+        boolean answer = false;
         int flag = 1;
         ArrayList<tBlock> workWith = findBottom(tet);
         for(tBlock t : workWith) {
@@ -200,9 +541,11 @@ public class Tetriminoe {
                 break;
         }
         if (flag == 1) {
-            for (tBlock t : tet.blockList)
+            for (tBlock t : tet.blockList) {
+                answer = true;
                 // move down 1 block
                 t.setY(t.getY() - (lineWidth + 2.0 * halfWidth));
+            }
         }
         // Update tetriminoe's place in drawList
         drawList.get(drawList.size()-4).setX(blockList.get(0).getX());
@@ -213,6 +556,7 @@ public class Tetriminoe {
         drawList.get(drawList.size()-2).setY(blockList.get(2).getY());
         drawList.get(drawList.size()-1).setX(blockList.get(3).getX());
         drawList.get(drawList.size()-1).setY(blockList.get(3).getY());
+        return answer;
     }
 
     public void moveLeft(Tetriminoe tet, double lineWidth, double halfWidth, ArrayList<tBlock> drawList){
@@ -295,6 +639,7 @@ public class Tetriminoe {
             else if (!sameX.contains(t.getX()))
                 sameX.add(t.getX());
         }
+
         ArrayList<Double> lowest = new ArrayList<>();
         for (Double d : sameX)
             lowest.add(9999999999999.9);
@@ -314,7 +659,6 @@ public class Tetriminoe {
                     bottom.add(t);
             }
         }
-
         return bottom;
     }
 
